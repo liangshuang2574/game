@@ -1,0 +1,49 @@
+extends CanvasLayer
+
+const AVATAR_MAP = {
+	"Brave": preload("res://ui/adventurer-asksth.PNG"),
+	"Pumpkin": preload("res://ui/pumpkin-worried.PNG")
+
+}
+
+var dialogs = []
+var current = 0
+
+@onready var content = $Content
+@onready var avatar = $Content/Avatar
+
+
+func _ready():
+	hide_dialog_box()
+	show_dialog_box([
+		{avatar="Brave", text="You look so sad. Is there anything I can help you with?"},
+		{avatar="Pumpkin", text="My little cat got scared and ran into the forest. Can you help me find her?"},
+		{avatar="Brave", text="Of course, I'll try to help you find her."},
+	])
+	
+	
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept"):
+		if current +1 < dialogs.size():
+			show_dialog(current + 1)
+		else:
+			hide_dialog_box()
+		get_viewport().set_input_as_handled()
+	
+	
+func hide_dialog_box():
+	content.hide()
+
+
+func show_dialog_box(_dialogs):
+	dialogs = _dialogs
+	content.show()
+	show_dialog(0)
+	
+	
+func show_dialog(index):
+	current = index
+	var dialog = dialogs[current]
+	content.text = dialog.text
+
+	avatar.texture = AVATAR_MAP[dialog.avatar]
