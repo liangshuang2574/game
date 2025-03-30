@@ -3,7 +3,6 @@ extends CanvasLayer
 const AVATAR_MAP = {
 	"Brave": preload("res://ui/adventurer-asksth.PNG"),
 	"Pumpkin": preload("res://ui/pumpkin-worried.PNG")
-
 }
 
 var dialogs = []
@@ -38,10 +37,10 @@ func hide_dialog_box():
 func show_dialog_box(_dialogs):
 	dialogs = _dialogs
 	content.show()
-	show_dialog(0)
+	_show_dialog(0)
 	
 	
-func show_dialog(index):
+func _show_dialog(index):
 	current = index
 	var dialog = dialogs[current]
 	content.text = dialog.text
